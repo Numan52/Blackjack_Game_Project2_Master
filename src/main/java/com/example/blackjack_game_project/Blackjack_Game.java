@@ -7,8 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.beans.property.SimpleBooleanProperty; //damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann.
 import javafx.beans.property.SimpleStringProperty; // Diese Klasse stellt eine vollständige Implementierung einer Property bereit, die einen String-Wert umschließt.
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
