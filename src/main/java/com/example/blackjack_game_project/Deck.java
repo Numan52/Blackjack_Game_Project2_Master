@@ -16,7 +16,7 @@ public class Deck { //floor
         for (Suit suit : Suit.values()) {   //value of cards
             for (Rank rank : Rank.values()) {    //rank of cards like
                 cards[i++] = new Card(suit, rank);   //add all 52 cards to array
-            }
+            }   //
         }
     }
 ///dadasda
