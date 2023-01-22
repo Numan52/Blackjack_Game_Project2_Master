@@ -12,6 +12,9 @@ public class Card extends Parent {
 
     private static final int CARD_WIDTH = 120; //Bereite der Karten (Weiße Fläche)
     private static final int CARD_HEIGHT = 170; //Höhe der Karten (Weiße Fläche)
+    public Suit suit;
+    public Rank rank;
+    public int value;
 
 
     enum Suit { //Eine Liste, in der der Inhalt (HEARTS, DIAMONDS, CLUBS, SPADES) als integer gezählt wird.
@@ -44,9 +47,6 @@ public class Card extends Parent {
         }
     }
 
-    public final Suit suit;
-    public final Rank rank;
-    public final int value;
 
     public Card(Suit suit, Rank rank) {
         this.suit = suit;

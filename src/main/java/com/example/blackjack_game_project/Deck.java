@@ -19,7 +19,6 @@ public class Deck { //floor
             }   //
         }
     }
-///dadasda
     public Card draw_card() {
         Card card = null;
         while (card == null) {

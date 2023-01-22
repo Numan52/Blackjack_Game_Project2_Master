@@ -29,13 +29,12 @@ public class Blackjack_Game extends Application {
     private final Deck deck = new Deck(); //Deck Karten
     private final Text end_message = new Text(); //message = System.out.println(Dealer oder Player + WON);
 
-
-    private SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
-    //false, damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann.
-
     private HBox dealer_cards = new HBox(20); //Der Abstand der Karten vom Dealer
     private HBox player_cards = new HBox(20); //Der Abstand der Karten vom Player
 
+    SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
+    //false, damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann.
+    // BIND PROPERTIES FOR Buttons
 
     private Parent createContent() {
 
@@ -43,13 +42,12 @@ public class Blackjack_Game extends Application {
         player = new Hand(player_cards.getChildren());
 
         Pane root = new Pane(); //Screen erstellen
-
         Region background = new Region();
         background.setPrefSize(1280, 720); //Background größe
         background.setStyle("-fx-background-color: rgba(0, 0, 0, 0)"); //Weiße Background (in unser Fall ist der weiße Rand)
         HBox root_layout = new HBox(-350);
         root_layout.setPadding(new Insets(10, 0, 0, 3));
-        Rectangle main_rectangle = new Rectangle(1260, 670);
+        Rectangle main_rectangle = new Rectangle(1258, 670);
         main_rectangle.setArcWidth(20);
         main_rectangle.setArcHeight(20);
         Image images = new Image("com/example/blackjack_game_project/background.png");
@@ -63,14 +61,9 @@ public class Blackjack_Game extends Application {
         // Main Box
         VBox all_in_main_rectangle = new VBox();
 
-        Text welcome_text = new Text("Welcome to");
+        Text welcome_text = new Text("Welcome to our \nBlackjack Game");
         welcome_text.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 30));
         welcome_text.setFill(Color.WHITE);
-
-
-        Text welcome_text2 = new Text("Blackjack Game!");
-        welcome_text2.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 30));
-        welcome_text2.setFill(Color.WHITE);
 
         Text info_text = new Text("\n(Press PLAY to start the game)\n");
         info_text.setFont(Font.font("arial", FontWeight.EXTRA_LIGHT, 15));
@@ -97,15 +90,13 @@ public class Blackjack_Game extends Application {
         HBox buttons_in_HBox = new HBox(15, button_hit, button_stand);  //Abstand von "Hit" und "Stand"
         buttons_in_HBox.setAlignment(Pos.CENTER);                  //"Hit" und "Stand" sollen in der mitte stehen
 
-        all_in_right_rectangle.getChildren().addAll(welcome_text, welcome_text2, info_text, score, button_play, buttons_in_HBox);
+        all_in_right_rectangle.getChildren().addAll(welcome_text, info_text, score, button_play, buttons_in_HBox);
 
 
         // ADD BOTH STACKS TO ROOT LAYOUT
         root_layout.getChildren().addAll(new StackPane(main_rectangle, all_in_main_rectangle), new StackPane(right_rectangle, all_in_right_rectangle));
         root.getChildren().addAll(background, root_layout);
 
-
-        // BIND PROPERTIES FOR Buttons
         button_play.disableProperty().bind(playable);   //damit man nicht immer ein neues Spiel beginnen kann, wenn man auf Play klickt
         button_hit.disableProperty().bind(playable.not()); //damit "Hit" am Anfang Disable bleibt
         button_stand.disableProperty().bind(playable.not()); //damit "Stand" am Anfang Disable bleibt
