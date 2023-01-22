@@ -7,18 +7,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.beans.property.SimpleBooleanProperty; //damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann.
 import javafx.beans.property.SimpleStringProperty; // Diese Klasse stellt eine vollständige Implementierung einer Property bereit, die einen String-Wert umschließt.
-import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -52,8 +48,8 @@ public class Blackjack_Game extends Application {
         background.setPrefSize(1280, 720); //Background größe
         background.setStyle("-fx-background-color: rgba(0, 0, 0, 0)"); //Weiße Background (in unser Fall ist der weiße Rand)
         HBox root_layout = new HBox(-350);
-        root_layout.setPadding(new Insets(10, 0, 0, 3.5));
-        Rectangle main_rectangle = new Rectangle(1255, 670);
+        root_layout.setPadding(new Insets(10, 0, 0, 3));
+        Rectangle main_rectangle = new Rectangle(1260, 670);
         main_rectangle.setArcWidth(20);
         main_rectangle.setArcHeight(20);
         Image images = new Image("com/example/blackjack_game_project/background.png");
