@@ -17,6 +17,24 @@ public class Card extends Parent {
     public int value;
 
 
+
+    enum Rank { //Wert der Karten
+        TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10),
+        JACK(10), QUEEN(10), KING(10), ACE(11);
+
+        final int value;
+        Rank(int value) {
+            this.value = value;
+        }
+
+        String card_name() { //take the first letter from the name of the card (Z.B KING = K, ......)
+            if (ordinal() < 9) {
+                return String.valueOf(value);
+            } else {
+                return name().substring(0, 1);
+            }  //function "name()" zeigt den Namen im enum
+        }
+    }
     enum Suit { //Eine Liste, in der der Inhalt (HEARTS, DIAMONDS, CLUBS, SPADES) als integer gezählt wird.
         //Z.B. HEARTS = 0, DIAMONDS = 1........
         HEARTS, DIAMONDS, CLUBS, SPADES;
@@ -28,26 +46,6 @@ public class Card extends Parent {
                     30, 30, true, true); // die größe
         }
     }
-
-    enum Rank { //Wert der Karten
-        TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10),
-        JACK(10), QUEEN(10), KING(10), ACE(11);
-
-        final int value;
-        Rank(int value) {
-            this.value = value;
-        }
-
-        String displayName() { //take the first letter from the name of the card (Z.B KING = K, ......)
-            if (ordinal() < 9) {
-                return String.valueOf(value);
-            } else {
-                return name().substring(0, 1);
-            }  //function "name()" zeigt den Namen im enum
-        }
-    }
-
-
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
@@ -58,7 +56,7 @@ public class Card extends Parent {
         card_rectangle.setArcHeight(15); ////Für die Rundung der Ecken
         card_rectangle.setFill(Color.WHITE);
 
-        Text top_cardname_firstletter = new Text(rank.displayName());
+        Text top_cardname_firstletter = new Text(rank.card_name());
         top_cardname_firstletter.setFont(Font.font(18));
         top_cardname_firstletter.setX(CARD_WIDTH - top_cardname_firstletter.getLayoutBounds().getWidth() - 10); //obere Buchstabe: Abstand zum Kartenrand
         top_cardname_firstletter.setY(top_cardname_firstletter.getLayoutBounds().getHeight()); //
@@ -68,12 +66,7 @@ public class Card extends Parent {
         lower_cardname_firstletter.setX(10);
         lower_cardname_firstletter.setY(CARD_HEIGHT - 10);
 
-        ImageView view = new ImageView(suit.image);
-        view.setRotate(180);
-        view.setX(CARD_WIDTH - 32);
-        view.setY(CARD_HEIGHT - 32);
-
-        getChildren().addAll(card_rectangle, new ImageView(suit.image), view, top_cardname_firstletter, lower_cardname_firstletter);
+        getChildren().addAll(card_rectangle, new ImageView(suit.image), top_cardname_firstletter, lower_cardname_firstletter);
     }
 
 }

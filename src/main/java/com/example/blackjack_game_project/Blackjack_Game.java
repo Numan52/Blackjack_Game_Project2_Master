@@ -34,7 +34,7 @@ public class Blackjack_Game extends Application {
 
     SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
     //false, damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann.
-    // BIND PROPERTIES FOR Buttons
+
 
     private Parent createGame() {
 
@@ -61,7 +61,7 @@ public class Blackjack_Game extends Application {
         // Main Box
         VBox all_in_main_rectangle = new VBox();
 
-        Text welcome_text = new Text("Welcome to our \nBlackjack Game");
+        Text welcome_text = new Text("Welcome to our \nBlackjack Game!");
         welcome_text.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 30));
         welcome_text.setFill(Color.WHITE);
 
@@ -90,7 +90,6 @@ public class Blackjack_Game extends Application {
         all_in_right_rectangle.getChildren().addAll(welcome_text, info_text, score, button_play, buttons_in_HBox);
 
 
-        // ADD BOTH STACKS TO ROOT LAYOUT
         root_layout.getChildren().addAll(new StackPane(main_rectangle, all_in_main_rectangle), new StackPane(right_rectangle, all_in_right_rectangle));
         root.getChildren().addAll(background, root_layout);
 
@@ -120,7 +119,7 @@ public class Blackjack_Game extends Application {
 
 
         button_play.setOnAction(event -> { //event ist ein Signal, das vom User verursacht wird. Z.B. Mausklick
-            start_new_game(); // Aufruf vom start_new_game()
+            start_Game(); // Aufruf vom start_new_game()
             info_text.setText("\n"); //macht ein Absatz nach info_text
         });
 
@@ -140,7 +139,7 @@ public class Blackjack_Game extends Application {
 
     }
 
-    private void start_new_game() {
+    private void start_Game() {
         GridPane grid = new GridPane();
         playable.set(true); //true, damit wenn man das Spiel beginnt "HIT" und "STAND" playable werden und "PLAY" not playable wird.
         dealer_cards.setPadding(new Insets(55)); //Abstand der Dealer Karten vom Rand
@@ -148,10 +147,10 @@ public class Blackjack_Game extends Application {
         end_message.setText(""); //Der Text wird anfangs jedes Spiels verschwinden.  end_message => (Dealer/Player + WON)
         end_message.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 15));
 
-        deck.refill();  //das Deck wird erneut gefüllt.
+        deck.fill_deck();  //das Deck wird erneut gefüllt.
 
-        dealer.reset(); //Dealer Karten reset
-        player.reset(); //Player Karten reset
+        dealer.reset_hand(); //Dealer Karten reset
+        player.reset_hand(); //Player Karten reset
 
 
         //take cards 4 times because function is being used 4 times (Class Deck function drawCard())
@@ -184,12 +183,12 @@ public class Blackjack_Game extends Application {
         end_message.setText("\t\t\t\t\t\t\t\t\t\t\t\t" + winner + " WON");
         end_message.setFill(Color.WHITE);
         score.setText("Dealer: " + score_dealer + "\n\nPlayer: " + score_player + "\n\n");
-        score.setFont(Font.font("arial", FontWeight.EXTRA_LIGHT, 20));
+        score.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
         score.setFill(Color.WHITE);
     }
 
     @Override
-    public void start(Stage main_stage) throws Exception { //start method inherited from Application class
+    public void start(Stage main_stage){ //start method inherited from Application class
         main_stage.setScene(new Scene(createGame()));
         main_stage.setTitle("Blackjack_Game");
         main_stage.setWidth(1280);

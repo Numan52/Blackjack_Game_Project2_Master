@@ -32,13 +32,14 @@ public class Hand {
         }
     }
 
-    public void reset() {
+    public SimpleIntegerProperty value_property() {
+        return value;
+    }
+
+    public void reset_hand() {
         cards.clear();
         value.set(0);
         aces = 0;
     }
 
-    public SimpleIntegerProperty value_property() {
-        return value;
-    }
 }

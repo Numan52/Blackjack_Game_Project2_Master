@@ -7,11 +7,10 @@ public class Deck { //floor
 
     private final Card[] cards = new Card[52]; //cards
 
-    public Deck() {
-        refill();
+    public Deck() { fill_deck();
     }   //übergibt erneut alle Karten
 
-    public final void refill() {   //give cards creating all cards
+    public final void fill_deck() {   //give cards creating all cards
         int i = 0;
         for (Suit suit : Suit.values()) {   //value of cards
             for (Rank rank : Rank.values()) {    //rank of cards like
