@@ -7,8 +7,9 @@ import javafx.scene.Node;
 import com.example.blackjack_game_project.Card.Rank;
 public class Hand {
 
-    private ObservableList<Node> cards; //schaut (wie ein listener) was sich in der Liste "Card[52]" ändert.
-    private SimpleIntegerProperty value = new SimpleIntegerProperty(0);
+    private ObservableList<Node> cards; // allows for elements in the list of cards to be observed for changes.
+                                        // automatic update of any part of the application that is using the list, without the need for manual updates
+    private SimpleIntegerProperty value = new SimpleIntegerProperty(0); //total value of cards in hand, allows for a variable to be observed for changes
 
     private int ACE_counter = 0; //zählt wie viel ASSe es gibt, um den Wert entweder als '1' oder als '11' ausgibt.
 
@@ -16,9 +17,8 @@ public class Hand {
         this.cards = cards; //
     }
 
-    public void take_card(com.example.blackjack_game_project.Card card) {
+    public void take_card(Card card) {
         cards.add(card);
-
         if (card.rank == Rank.ACE) {
             ACE_counter++;
         }
