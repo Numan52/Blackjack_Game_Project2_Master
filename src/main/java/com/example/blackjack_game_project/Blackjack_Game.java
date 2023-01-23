@@ -38,7 +38,7 @@ public class Blackjack_Game extends Application {
 
     private Parent createGame() {
 
-        dealer = new Hand(dealer_cards.getChildren());//getChildren ist alle properties und funktionen von class parent
+        dealer = new Hand(dealer_cards.getChildren());//getChildren = alle properties und funktionen von class parent
         player = new Hand(player_cards.getChildren());
 
         Pane root = new Pane(); //Screen erstellen
@@ -66,7 +66,7 @@ public class Blackjack_Game extends Application {
         welcome_text.setFill(Color.WHITE);
 
         Text info_text = new Text("\n(Press PLAY to start the game)\n");
-        info_text.setFont(Font.font("arial", FontWeight.EXTRA_LIGHT, 15));
+        info_text.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 15));
         info_text.setFill(Color.WHITE);
 
         Text dealer_score = new Text("Dealer: ");
@@ -145,8 +145,8 @@ public class Blackjack_Game extends Application {
         playable.set(true); //true, damit wenn man das Spiel beginnt "HIT" und "STAND" playable werden und "PLAY" not playable wird.
         dealer_cards.setPadding(new Insets(55)); //Abstand der Dealer Karten vom Rand
         player_cards.setPadding(new Insets(55)); //Abstand der Dealer Karten vom Rand
-        end_message.setText(""); //Der Text wird anfangs jeder Spiel verschwinden.  end_message => (Dealer/Player + WON)
-        end_message.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
+        end_message.setText(""); //Der Text wird anfangs jedes Spiels verschwinden.  end_message => (Dealer/Player + WON)
+        end_message.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 15));
 
         deck.refill();  //das Deck wird erneut gefüllt.
 
