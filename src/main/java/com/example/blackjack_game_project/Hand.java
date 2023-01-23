@@ -7,25 +7,25 @@ import javafx.scene.Node;
 import com.example.blackjack_game_project.Card.Rank;
 public class Hand {
 
-    private ObservableList<Node> cards; //
+    private ObservableList<Node> cards; //schaut (wie ein listener) was sich in der Liste "Card[52]" ändert.
     private SimpleIntegerProperty value = new SimpleIntegerProperty(0);
 
-    private int aces = 0; //black jack !! 21 on hit
+    private int ACE_counter = 0; //zählt wie viel ASSe es gibt, um den Wert entweder als '1' oder als '11' ausgibt.
 
     public Hand(ObservableList<Node> cards) {
-        this.cards = cards;
+        this.cards = cards; //
     }
 
     public void take_card(com.example.blackjack_game_project.Card card) {
         cards.add(card);
 
         if (card.rank == Rank.ACE) {
-            aces++;
+            ACE_counter++;
         }
 
-        if (value.get() + card.value > 21 && aces > 0) {
+        if (value.get() + card.value > 21 && ACE_counter > 0) {
             value.set(value.get() + card.value - 10);    //Ass wird als '1' und nicht als '11' gezählt
-            aces--;
+            ACE_counter--;
         }
         else {
             value.set(value.get() + card.value);
@@ -39,7 +39,7 @@ public class Hand {
     public void reset_hand() {
         cards.clear();
         value.set(0);
-        aces = 0;
+        ACE_counter = 0;
     }
 
 }

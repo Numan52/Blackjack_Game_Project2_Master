@@ -9,13 +9,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Card extends Parent {
-
+    public Rank rank;
+    public Suit suit;
+    public int value;
     private static final int CARD_WIDTH = 120; //Bereite der Karten (Weiße Fläche)
     private static final int CARD_HEIGHT = 170; //Höhe der Karten (Weiße Fläche)
-    public Suit suit;
-    public Rank rank;
-    public int value;
-
 
 
     enum Rank { //Wert der Karten
@@ -41,7 +39,7 @@ public class Card extends Parent {
 
         final Image image;
 
-        Suit() { //ließt die vier png Fotos in resources
+        Suit() { //ließt die vier png Symbole in resources
             this.image = new Image(Card.class.getResourceAsStream("symbols/".concat(name().toUpperCase()).concat(".png")),
                     30, 30, true, true); // die größe
         }
@@ -51,9 +49,10 @@ public class Card extends Parent {
         this.rank = rank;
         this.value = rank.value;
 
+        //Display cards in the Game
         Rectangle card_rectangle = new Rectangle(CARD_WIDTH, CARD_HEIGHT);
-        card_rectangle.setArcWidth(15); //Für die Rundung der Ecken
-        card_rectangle.setArcHeight(15); ////Für die Rundung der Ecken
+        card_rectangle.setArcWidth(15); //Runde Ecken
+        card_rectangle.setArcHeight(15); //Runde Ecken
         card_rectangle.setFill(Color.WHITE);
 
         Text top_cardname_firstletter = new Text(rank.card_name());

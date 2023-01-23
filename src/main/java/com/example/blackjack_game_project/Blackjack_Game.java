@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-//
+
 public class Blackjack_Game extends Application {
 
     private int score_dealer = 0;
@@ -33,10 +33,10 @@ public class Blackjack_Game extends Application {
     private HBox player_cards = new HBox(20); //Der Abstand der Karten vom Player
 
     SimpleBooleanProperty playable = new SimpleBooleanProperty(false);
-    //false, damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann.
+    //false, damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann, aber "PLAY" schon.
 
 
-    private Parent createGame() {
+    private Parent create_game() {
 
         dealer = new Hand(dealer_cards.getChildren());//getChildren = alle properties und funktionen von class parent
         player = new Hand(player_cards.getChildren());
@@ -45,17 +45,20 @@ public class Blackjack_Game extends Application {
         Region background = new Region();
         background.setPrefSize(1280, 720); //Background größe
         background.setStyle("-fx-background-color: rgba(0, 0, 0, 0)"); //Weiße Background (in unser Fall ist der weiße Rand)
+
         HBox root_layout = new HBox(-350);
-        root_layout.setPadding(new Insets(10, 0, 0, 3));
+        root_layout.setPadding(new Insets(10, 0, 0, 4));
+
         Rectangle main_rectangle = new Rectangle(1258, 670);
         Image images = new Image("com/example/blackjack_game_project/background.png");
         main_rectangle.setArcWidth(20);
         main_rectangle.setArcHeight(20);
         main_rectangle.setFill(new ImagePattern(images));
+
         Rectangle right_rectangle = new Rectangle(300, 500);
-        right_rectangle.setArcWidth(20);      //Das ist für runde Ecken
-        right_rectangle.setArcHeight(20);     //Das ist für runde Ecken
-        right_rectangle.setFill(new Color(0f,0f,0f,0.3f )); //halb Transparent
+        right_rectangle.setArcWidth(20);      //Runde Ecken
+        right_rectangle.setArcHeight(20);     //Runde Ecken
+        right_rectangle.setFill(new Color(0f,0f,0f,0.3f )); //Transparent
 
 
         // Main Box
@@ -66,60 +69,68 @@ public class Blackjack_Game extends Application {
         welcome_text.setFill(Color.WHITE);
 
         Text info_text = new Text("\n(Press PLAY to start the game)\n");
-        info_text.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 15));
+        info_text.setFont(Font.font("arial", FontWeight.EXTRA_LIGHT, 15));
         info_text.setFill(Color.WHITE);
 
-        Text dealer_score = new Text("Dealer: ");
-        dealer_score.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
+        Text dealer_cards_value = new Text("Dealer: ");
+        dealer_cards_value.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
 
-        Text player_score = new Text("Player: ");
-        player_score.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
-        all_in_main_rectangle.getChildren().addAll(dealer_score, dealer_cards, end_message, player_cards, player_score);
+        Text player_cards_value = new Text("Player: ");
+        player_cards_value.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
 
-        //Rechte BOX
+        //Add All to VBox all_in_main_rectangle
+        all_in_main_rectangle.getChildren().addAll(dealer_cards_value, dealer_cards, end_message, player_cards, player_cards_value);
+
+        //Rechte VBOX
         VBox all_in_right_rectangle = new VBox(20);
         all_in_right_rectangle.setAlignment(Pos.CENTER);
 
+        //Erstellen von Buttons
         Button button_play = new Button("PLAY");
         Button button_hit = new Button("HIT");
         Button button_stand = new Button("STAND");
 
+        //HBox for buttons (invisible)
         HBox buttons_in_HBox = new HBox(15, button_hit, button_stand);  //Abstand von "Hit" und "Stand"
-        buttons_in_HBox.setAlignment(Pos.CENTER);                  //"Hit" und "Stand" sollen in der mitte stehen
+        buttons_in_HBox.setAlignment(Pos.CENTER);
 
+        //Add All to VBox all_in_right_rectangle
         all_in_right_rectangle.getChildren().addAll(welcome_text, info_text, score, button_play, buttons_in_HBox);
 
 
         root_layout.getChildren().addAll(new StackPane(main_rectangle, all_in_main_rectangle), new StackPane(right_rectangle, all_in_right_rectangle));
         root.getChildren().addAll(background, root_layout);
 
+        //Buttons disable Property
         button_play.disableProperty().bind(playable);   //damit man nicht immer ein neues Spiel beginnen kann, wenn man auf Play klickt
         button_hit.disableProperty().bind(playable.not()); //damit "Hit" am Anfang Disable bleibt
         button_stand.disableProperty().bind(playable.not()); //damit "Stand" am Anfang Disable bleibt
 
-        player_score.textProperty().bind(new SimpleStringProperty("\t\t        Player: ").concat(player.value_property().asString()));
-        player_score.setFill(Color.WHITE);
-        //Der aktuelle Gesamtwert vom Player Karten wird nach "Player: " geschrieben
 
-        dealer_score.textProperty().bind(new SimpleStringProperty("\n\t\t        Dealer: ").concat(dealer.value_property().asString()));
-        dealer_score.setFill(Color.WHITE);
+        //Der aktuelle Gesamtwert vom Player Karten wird nach "Player: " geschrieben
+        player_cards_value.textProperty().bind(new SimpleStringProperty("\t\t        Player: ").concat(player.value_property().asString()));
+        player_cards_value.setFill(Color.WHITE);
+
         //Der aktuelle Gesamtwert vom Dealer Karten wird nach "Dealer: " geschrieben
+        dealer_cards_value.textProperty().bind(new SimpleStringProperty("\n\t\t        Dealer: ").concat(dealer.value_property().asString()));
+        dealer_cards_value.setFill(Color.WHITE);
+
 
         player.value_property().addListener((observable_value, old_value, new_value) -> {
             if (new_value.intValue() >= 21) {
-                end_game();
+                finish_game();
             }
         });
 
         dealer.value_property().addListener((observable_value, value, new_value) -> {
             if (new_value.intValue() >= 21) {
-                end_game();
+                finish_game();
             }
         });
 
 
         button_play.setOnAction(event -> { //event ist ein Signal, das vom User verursacht wird. Z.B. Mausklick
-            start_Game(); // Aufruf vom start_new_game()
+            start_game(); // Aufruf vom start_new_game()
             info_text.setText("\n"); //macht ein Absatz nach info_text
         });
 
@@ -132,20 +143,19 @@ public class Blackjack_Game extends Application {
                 dealer.take_card(deck.draw_card()); //zieht neue Karte für Dealer
             }
 
-            end_game(); //end_game wird aufgerufen
+            finish_game(); //end_game wird aufgerufen
         });
 
         return root;
 
     }
 
-    private void start_Game() {
+    private void start_game() {
         GridPane grid = new GridPane();
         playable.set(true); //true, damit wenn man das Spiel beginnt "HIT" und "STAND" playable werden und "PLAY" not playable wird.
         dealer_cards.setPadding(new Insets(55)); //Abstand der Dealer Karten vom Rand
         player_cards.setPadding(new Insets(55)); //Abstand der Dealer Karten vom Rand
         end_message.setText(""); //Der Text wird anfangs jedes Spiels verschwinden.  end_message => (Dealer/Player + WON)
-        end_message.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 15));
 
         deck.fill_deck();  //das Deck wird erneut gefüllt.
 
@@ -161,7 +171,7 @@ public class Blackjack_Game extends Application {
 
     }
 
-    private void end_game() {
+    private void finish_game() {
 
         playable.set(false); //false, damit beim Spielende nur PLAY Button Playable wird
 
@@ -181,7 +191,9 @@ public class Blackjack_Game extends Application {
         }
 
         end_message.setText("\t\t\t\t\t\t\t\t\t\t\t\t" + winner + " WON");
+        end_message.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
         end_message.setFill(Color.WHITE);
+
         score.setText("Dealer: " + score_dealer + "\n\nPlayer: " + score_player + "\n\n");
         score.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
         score.setFill(Color.WHITE);
@@ -189,7 +201,7 @@ public class Blackjack_Game extends Application {
 
     @Override
     public void start(Stage main_stage){ //start method inherited from Application class
-        main_stage.setScene(new Scene(createGame()));
+        main_stage.setScene(new Scene(create_game()));
         main_stage.setTitle("Blackjack_Game");
         main_stage.setWidth(1280);
         main_stage.setHeight(720);
