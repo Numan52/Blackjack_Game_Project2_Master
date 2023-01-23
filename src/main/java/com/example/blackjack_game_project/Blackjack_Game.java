@@ -36,7 +36,7 @@ public class Blackjack_Game extends Application {
     //false, damit man nicht bevor die Karten ausgeteilt wurden auf "Hit" oder "Stand" klicken kann.
     // BIND PROPERTIES FOR Buttons
 
-    private Parent createContent() {
+    private Parent createGame() {
 
         dealer = new Hand(dealer_cards.getChildren());//getChildren ist alle properties und funktionen von class parent
         player = new Hand(player_cards.getChildren());
@@ -48,9 +48,9 @@ public class Blackjack_Game extends Application {
         HBox root_layout = new HBox(-350);
         root_layout.setPadding(new Insets(10, 0, 0, 3));
         Rectangle main_rectangle = new Rectangle(1258, 670);
+        Image images = new Image("com/example/blackjack_game_project/background.png");
         main_rectangle.setArcWidth(20);
         main_rectangle.setArcHeight(20);
-        Image images = new Image("com/example/blackjack_game_project/background.png");
         main_rectangle.setFill(new ImagePattern(images));
         Rectangle right_rectangle = new Rectangle(300, 500);
         right_rectangle.setArcWidth(20);      //Das ist für runde Ecken
@@ -76,12 +76,9 @@ public class Blackjack_Game extends Application {
         player_score.setFont(Font.font("arial", FontWeight.EXTRA_BOLD, 20));
         all_in_main_rectangle.getChildren().addAll(dealer_score, dealer_cards, end_message, player_cards, player_score);
 
-
-
         //Rechte BOX
         VBox all_in_right_rectangle = new VBox(20);
         all_in_right_rectangle.setAlignment(Pos.CENTER);
-
 
         Button button_play = new Button("PLAY");
         Button button_hit = new Button("HIT");
@@ -192,16 +189,16 @@ public class Blackjack_Game extends Application {
     }
 
     @Override
-    public void start(Stage main_stage) throws Exception {
-        main_stage.setScene(new Scene(createContent()));
+    public void start(Stage main_stage) throws Exception { //start method inherited from Application class
+        main_stage.setScene(new Scene(createGame()));
+        main_stage.setTitle("Blackjack_Game");
         main_stage.setWidth(1280);
         main_stage.setHeight(720);
         main_stage.setResizable(false);
-        main_stage.setTitle("Blackjack_Game");
         main_stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args); //calls the start method above
     }
 }
