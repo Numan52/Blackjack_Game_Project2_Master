@@ -32,7 +32,7 @@ public class Hand {
         }
     }
 
-    public SimpleIntegerProperty value_property() {
+    public SimpleIntegerProperty cards_value() {
         return value;
     }
 

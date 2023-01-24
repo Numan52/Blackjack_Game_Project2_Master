@@ -108,21 +108,21 @@ public class Blackjack_Game extends Application {
 
 
         //Der aktuelle Gesamtwert vom Player Karten wird nach "Player: " geschrieben
-        player_cards_value.textProperty().bind(new SimpleStringProperty("\t\t        Player: ").concat(player.value_property().asString()));
+        player_cards_value.textProperty().bind(new SimpleStringProperty("\t\t        Player: ").concat(player.cards_value().asString()));
         player_cards_value.setFill(Color.WHITE);
 
         //Der aktuelle Gesamtwert vom Dealer Karten wird nach "Dealer: " geschrieben
-        dealer_cards_value.textProperty().bind(new SimpleStringProperty("\n\t\t        Dealer: ").concat(dealer.value_property().asString()));
+        dealer_cards_value.textProperty().bind(new SimpleStringProperty("\n\t\t        Dealer: ").concat(dealer.cards_value().asString()));
         dealer_cards_value.setFill(Color.WHITE);
 
 
-        player.value_property().addListener((observable_value, old_value, new_value) -> {
+        player.cards_value().addListener((observable_value, old_value, new_value) -> {
             if (new_value.intValue() >= 21) {
                 finish_game();
             }
         });
 
-        dealer.value_property().addListener((observable_value, value, new_value) -> {
+        dealer.cards_value().addListener((observable_value, value, new_value) -> {
             if (new_value.intValue() >= 21) {
                 finish_game();
             }
@@ -139,7 +139,7 @@ public class Blackjack_Game extends Application {
         });
 
         button_stand.setOnAction(event -> {
-            while (dealer.value_property().get() < 17) { //wenn der Wert von dealer Karten kleiner ist als 17, wird immer eine neue Karte gezogen
+            while (dealer.cards_value().get() < 17) { //wenn der Wert von dealer Karten kleiner ist als 17, wird immer eine neue Karte gezogen
                 dealer.take_card(deck.draw_card()); //zieht neue Karte für Dealer
             }
 
@@ -147,11 +147,9 @@ public class Blackjack_Game extends Application {
         });
 
         return root;
-
     }
 
     private void start_game() {
-        GridPane grid = new GridPane();
         playable.set(true); //true, damit wenn man das Spiel beginnt "HIT" und "STAND" playable werden und "PLAY" not playable wird.
         dealer_cards.setPadding(new Insets(55)); //Abstand der Dealer Karten vom Rand
         player_cards.setPadding(new Insets(55)); //Abstand der Dealer Karten vom Rand
@@ -171,15 +169,14 @@ public class Blackjack_Game extends Application {
 
     }
 
-    private void finish_game() {
+    private void finish_game() { //called when stand button is pressed
 
         playable.set(false); //false, damit beim Spielende nur PLAY Button Playable wird
 
-        int dealer_cards_value = dealer.value_property().get();
-        int player_cards_value = player.value_property().get();
-        String winner = "Exceptional case: dealer: " + dealer_cards_value + " player: " + player_cards_value;
+        int dealer_cards_value = dealer.cards_value().get();
+        int player_cards_value = player.cards_value().get();
+        String winner;
 
-        // the order of checking is important
         if (dealer_cards_value == 21 || player_cards_value > 21 || dealer_cards_value == player_cards_value
                 || (dealer_cards_value < 21 && dealer_cards_value > player_cards_value)) {
             winner = "DEALER";
